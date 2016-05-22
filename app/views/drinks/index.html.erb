@@ -1,0 +1,5 @@
+<% @drinks.each do |drink| %>
+  <h2><%= link_to drink.name, drink %></h2>
+<% end %>
+
+<%= link_to "Add new ENERGY DRINK", new_drink_path %>

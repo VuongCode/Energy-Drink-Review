@@ -1,0 +1,10 @@
+<h1><%= @drink.name %></h1>
+<h3>Brand: <%= @drink.brand %></h3>
+<p>Description: <%= @drink.description %></p>
+<p>Volume: <%= @drink.volume %> fluid ounces</p>
+<p>Caffeine: <%= @drink.caffeine %> mg</p>
+<p>Calories: <%= @drink.calories %></p>
+
+<%= link_to "Edit", edit_drink_path %>
+<%= link_to "Destroy", drink_path(@drink), method: :delete, data: { confirm: "Are you sure? "} %>
+<%= link_to "Home", root_path %>
