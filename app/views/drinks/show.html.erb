@@ -6,6 +6,15 @@
 <p>Caffeine: <%= @drink.caffeine %> mg</p>
 <p>Calories: <%= @drink.calories %></p>
 <p>User: <%= @drink.user.name %></p>
+
+<h2><%= pluralize(@drink.reviews.count, "Review") %></h2>
+<% @reviews.each do |review| %>
+  <p><%= review.user.name %></p>
+  <p><%= review.body %></p>
+<% end %>
+
+<%= render 'reviews/form' %>
+
 <img id='thumb-img-size' src="<%= @drink.user.avatar.url %>"></img>
 
 

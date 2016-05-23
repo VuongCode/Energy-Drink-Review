@@ -1,0 +1,4 @@
+<%= simple_form_for([@drink, @drink.reviews.build]) do |f| %>
+  <%= f.input :body, label: "Review" %>
+  <%= f.button :submit %>
+<% end %>

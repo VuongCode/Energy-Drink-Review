@@ -1,5 +1,5 @@
 class DrinksController < ApplicationController
-  before_action :find_post, only: [:show, :edit, :update, :destroy]
+  before_action :find_drink, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
@@ -7,6 +7,7 @@ class DrinksController < ApplicationController
   end
 
   def show
+    @reviews = Review.where(drink_id: @drink)
   end
 
   def new
@@ -14,7 +15,7 @@ class DrinksController < ApplicationController
   end
 
   def create
-    @drink = current_user.drinks.build(post_params)
+    @drink = current_user.drinks.build(drink_params)
 
     if @drink.save
       redirect_to @drink
@@ -27,7 +28,7 @@ class DrinksController < ApplicationController
   end
 
   def update
-    if @drink.update(post_params)
+    if @drink.update(drink_params)
       redirect_to @drink
     else
       render 'edit'
@@ -41,11 +42,11 @@ class DrinksController < ApplicationController
 
   private
 
-  def find_post
+  def find_drink
     @drink = Drink.find(params[:id])
   end
 
-  def post_params
+  def drink_params
     params.require(:drink).permit(:name, :brand, :description, :volume, :caffeine, :calories, :avatar)
   end
 end
