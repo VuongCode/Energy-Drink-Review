@@ -1,9 +1,13 @@
 <h1><%= @drink.name %></h1>
 <h3>Brand: <%= @drink.brand %></h3>
+<img id='drink-img-size' src="<%= @drink.avatar.url %>"></img>
 <p>Description: <%= @drink.description %></p>
 <p>Volume: <%= @drink.volume %> fluid ounces</p>
 <p>Caffeine: <%= @drink.caffeine %> mg</p>
 <p>Calories: <%= @drink.calories %></p>
+<p>User: <%= @drink.user.name %></p>
+<img id='thumb-img-size' src="<%= @drink.user.avatar.url %>"></img>
+
 
 <%= link_to "Edit", edit_drink_path %>
 <%= link_to "Destroy", drink_path(@drink), method: :delete, data: { confirm: "Are you sure? "} %>

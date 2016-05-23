@@ -46,6 +46,6 @@ class DrinksController < ApplicationController
   end
 
   def post_params
-    params.require(:drink).permit(:name, :brand, :description, :volume, :caffeine, :calories)
+    params.require(:drink).permit(:name, :brand, :description, :volume, :caffeine, :calories, :avatar)
   end
 end

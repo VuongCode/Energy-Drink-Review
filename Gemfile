@@ -7,6 +7,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'devise'
 gem 'simple_form'
+gem 'carrierwave'
+gem 'fog'
+gem "mini_magick"
 
 group :development, :test do
   gem 'capybara'
@@ -23,4 +26,8 @@ end
 
 group :production do
   gem 'rails_12factor'
+end
+
+group :development, :test do
+  gem "dotenv-rails"
 end
