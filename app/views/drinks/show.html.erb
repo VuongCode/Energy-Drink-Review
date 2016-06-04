@@ -1,3 +1,11 @@
+<ul>
+  <% if user_signed_in? %>
+    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to "Sign In", new_user_session_path %></li>
+  <% end %>
+</ul>
+
 <h1><%= @drink.name %></h1>
 <h3>Brand: <%= @drink.brand %></h3>
 <img id='drink-img-size' src="<%= @drink.avatar.url %>"></img>
@@ -7,10 +15,18 @@
 <p>Calories: <%= @drink.calories %></p>
 <p>User: <%= @drink.user.name %></p>
 
-<h2><%= pluralize(@drink.reviews.count, "Review") %></h2>
+<h2><%= pluralize(@drink.reviews.count, "Review") %> (<%= @drink.average_rating %>)</h2>
 <% @reviews.each do |review| %>
-  <p><%= review.user.name %></p>
-  <p><%= review.body %></p>
+  <ul>
+    <li>Rating: <%= review.rating %></li>
+    <li><%= review.user.name %></li>
+    <li><%= review.body %></li>
+    <li>Score: <%= review.score %></li>
+    <div class="votes">
+      <%= link_to "Upvote", drink_review_votes_path(@drink, review, upvote: 1), method: "create" %>
+      <%= link_to "Downvote", drink_review_votes_path(@drink, review, upvote: -1), method: "create"%>
+    </div>
+  </ul>
 <% end %>
 
 <%= render 'reviews/form' %>
@@ -19,5 +35,7 @@
 
 
 <%= link_to "Edit", edit_drink_path %>
-<%= link_to "Destroy", drink_path(@drink), method: :delete, data: { confirm: "Are you sure? "} %>
+<% if current_user.admin? || @drink.user_id == current_user.id %>
+  <%= link_to "Destroy", drink_path(@drink), method: :delete, data: { confirm: "Are you sure? "} %>
+<% end %>
 <%= link_to "Home", root_path %>

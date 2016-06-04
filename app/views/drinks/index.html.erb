@@ -1,5 +1,44 @@
-<% @drinks.each do |drink| %>
-  <h2><%= link_to drink.name, drink %></h2>
+<ul>
+  <% if user_signed_in? %>
+    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to "Sign In", new_user_session_path %></li>
+  <% end %>
+</ul>
+
+<%= form_tag(drinks_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search Drinks" %>
+  <%= submit_tag "Search" %>
 <% end %>
 
-<%= link_to "Add new ENERGY DRINK", new_drink_path %>
+<hr />
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Count</th>
+  </tr>
+ <tr>
+  <td><hr></td>
+  <td><hr></td>
+</tr>
+  <% @drinks.each do |drink| %>
+    <tr>
+      <td><%= drink.name %></td>
+      <td><%= drink.reviews.count %></td>
+      <td><%= link_to 'Show', :action => :show, :id => drink.id %></td>
+      <td><%= link_to 'Edit', :action => :edit, :id => drink.id %></td>
+      <td><%= link_to 'Destroy', { :action => :destroy, :id => drink.id }, :method => :delete, :confirm => 'Are you sure?' %></td>
+    </tr>
+    <tr>
+      <td><hr></td>
+      <td><hr></td>
+    </tr>
+  <% end %>
+</table>
+
+<% @drinks.each do |drink| %>
+  <h2><%= link_to drink.name, drink %></h2>
+  <p><%= drink.reviews.count %> Comments</p>
+<% end %>
+
+<%= link_to "Add New ENERGY DRINK", new_drink_path %>

@@ -10,11 +10,14 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to drink_path(@drink)
     else
+      @vote = Vote.new
       render 'new'
     end
   end
 
+  private
+
   def review_params
-    params.require(:review).permit(:body, :drink_id, :user_id)
+    params.require(:review).permit(:body, :rating, :drink_id, :user_id)
   end
 end

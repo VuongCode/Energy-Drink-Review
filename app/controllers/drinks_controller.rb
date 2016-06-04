@@ -1,9 +1,14 @@
 class DrinksController < ApplicationController
   before_action :find_drink, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorize_user, except: [:index, :show, :new, :create, :destroy]
 
   def index
-    @drinks = Drink.all.order("created_at DESC")
+    @drinks = Drink.all
+    if params[:search]
+      @drinks = Drink.search(params[:search]).order("created_at DESC")
+    else
+      @drinks = Drink.all.order('created_at DESC')
+    end
   end
 
   def show
@@ -48,5 +53,11 @@ class DrinksController < ApplicationController
 
   def drink_params
     params.require(:drink).permit(:name, :brand, :description, :volume, :caffeine, :calories, :avatar)
+  end
+
+  def authorize_user
+    if !user_signed_in? || !current_user.admin?
+      raise ActionController::RoutingError.new("Not Found")
+    end
   end
 end

@@ -6,6 +6,12 @@ class User < ActiveRecord::Base
 
   has_many :drinks
   has_many :reviews
+  has_many :votes
 
   mount_uploader :avatar, AvatarUploader
+
+  def admin?
+    role == "admin"
+  end
+
 end
