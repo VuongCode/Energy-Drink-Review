@@ -1,13 +1,13 @@
 class DrinksController < ApplicationController
   before_action :find_drink, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user, except: [:index, :show, :new, :create, :destroy]
+  before_action :authorize_user, except: [:index, :edit, :show, :new, :create, :destroy]
 
   def index
     @drinks = Drink.all
     if params[:search]
-      @drinks = Drink.search(params[:search]).order("created_at DESC")
+      @drinks = Drink.search(params[:search]).order("created_at DESC").page params[:page]
     else
-      @drinks = Drink.all.order('created_at DESC')
+      @drinks = Drink.all.order('created_at DESC').page params[:page]
     end
   end
 

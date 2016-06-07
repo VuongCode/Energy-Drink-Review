@@ -2,6 +2,7 @@ class Drink < ActiveRecord::Base
   belongs_to :user
   has_many :reviews
 
+  paginates_per 10
   mount_uploader :avatar, AvatarUploader
 
   def average_rating
@@ -24,6 +25,6 @@ class Drink < ActiveRecord::Base
   end
 
   def self.search(search)
-    where("Name LIKE ?", "%#{search}%")
+    where("name ILIKE ? OR brand ILIKE ?", "%#{search}%", "%#{search}%")
   end
 end
