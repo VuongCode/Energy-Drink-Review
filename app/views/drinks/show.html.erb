@@ -1,10 +1,26 @@
-<ul>
-  <% if user_signed_in? %>
-    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
-  <% else %>
-    <li><%= link_to "Sign In", new_user_session_path %></li>
-  <% end %>
-</ul>
+<header class="title-container">
+  <div id="title">
+    <h2>EnergyReview</h2>
+  </div>
+
+  <div id="login">
+    <% if user_signed_in? %>
+      <ul class='organizer'>
+        <li>
+          <% if current_user.avatar.url != nil %>
+            <img id='header-img-size' src="<%= current_user.avatar.url %>"></img>
+          <% end %>
+        </li>
+        <li><%= current_user.name %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+      </ul>
+    <% else %>
+      <ul class='organizer'>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+      </ul>
+    <% end %>
+  </div>
+</header>
 
 <h1><%= @drink.name %></h1>
 <h3>Brand: <%= @drink.brand %></h3>
@@ -15,24 +31,28 @@
 <p>Calories: <%= @drink.calories %></p>
 <p>User: <%= @drink.user.name %></p>
 
-<h2><%= pluralize(@drink.reviews.count, "Review") %> (<%= @drink.average_rating %>)</h2>
-<% @reviews.each do |review| %>
-  <ul>
-    <li>Rating: <%= review.rating %></li>
-    <li><%= review.user.name %></li>
-    <li><%= review.body %></li>
-    <li>Score: <%= review.score %></li>
-    <div class="votes">
-      <%= link_to "Upvote", drink_review_votes_path(@drink, review, upvote: 1), method: "create" %>
-      <%= link_to "Downvote", drink_review_votes_path(@drink, review, upvote: -1), method: "create"%>
-    </div>
-  </ul>
-<% end %>
+<h2><%= pluralize(@drink.reviews.count, "Review") %> (<%= @drink.average_rating %> stars)</h2>
 
-<%= render 'reviews/form' %>
+<div class="review-container">
+  <div class="review-form">
+    <%= render 'reviews/form' %>
+  </div>
 
-<img id='thumb-img-size' src="<%= @drink.user.avatar.url %>"></img>
-
+  <div>
+    <% @reviews.each do |review| %>
+      <ul class="review">
+        <li>Rating: <%= render_stars(review.rating) %></li>
+        <li class="author">By <%= review.user.name %></li>
+        <li><%= review.body %></li>
+        <li class="score">Score: <%= review.score %></li>
+        <div class="votes">
+          <%= link_to "Upvote", drink_review_votes_path(@drink, review, upvote: 1), method: "create" %>
+          <%= link_to "Downvote", drink_review_votes_path(@drink, review, upvote: -1), method: "create"%>
+        </div>
+      </ul>
+    <% end %>
+  </div>
+</div>
 
 <%= link_to "Edit", edit_drink_path %>
 <% if current_user.admin? || @drink.user_id == current_user.id %>

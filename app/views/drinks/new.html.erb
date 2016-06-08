@@ -1,10 +1,26 @@
-<ul>
-  <% if user_signed_in? %>
-    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
-  <% else %>
-    <li><%= link_to "Sign In", new_user_session_path %></li>
-  <% end %>
-</ul>
+<header class="title-container">
+  <div id="title">
+    <h2>EnergyReview</h2>
+  </div>
 
-<h1>Another placeholder</h1>
+  <div id="login">
+    <% if user_signed_in? %>
+      <ul class='organizer'>
+        <li>
+          <% if current_user.avatar.url != nil %>
+            <img id='header-img-size' src="<%= current_user.avatar.url %>"></img>
+          <% end %>
+        </li>
+        <li><%= current_user.name %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+      </ul>
+    <% else %>
+      <ul class='organizer'>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+      </ul>
+    <% end %>
+  </div>
+</header>
+
+<h3>Add New Energy Drink</h3>
 <%= render 'form' %>

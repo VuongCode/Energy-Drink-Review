@@ -1,21 +1,45 @@
-<ul>
-  <% if user_signed_in? %>
-    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
-  <% else %>
-    <li><%= link_to "Sign In", new_user_session_path %></li>
-  <% end %>
-</ul>
+<header class="title-container">
+  <div id="title">
+    <h2>EnergyReview</h2>
+  </div>
 
-<%= form_tag drinks_path, method: :get do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Search Drinks" %>
-  <%= submit_tag "Search" %>
-<% end %>
+  <div id="login">
+    <% if user_signed_in? %>
+      <ul class='organizer'>
+        <li>
+          <% if current_user.avatar.url != nil %>
+            <img id='header-img-size' src="<%= current_user.avatar.url %>"></img>
+          <% end %>
+        </li>
+        <li><%= current_user.name %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+      </ul>
+    <% else %>
+      <ul class='organizer'>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+      </ul>
+    <% end %>
+  </div>
+
+  <div id="search">
+    <%= form_tag drinks_path, method: :get do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Drinks" %>
+      <p><%= submit_tag "Search" %></p>
+    <% end %>
+  </div>
+</header>
+
+<p id="add">
+<%= link_to "Add New ENERGY DRINK", new_drink_path %>
+</p>
+
+<div class="drink-container">
+  <% @drinks.each do |drink| %>
+    <div class="drink-container-box">
+      <h3><%= link_to drink.name, drink %> by <%= drink.brand %></h3>
+      <p><%= drink.reviews.count %> Comments</p>
+    </div>
+  <% end %>
+</div>
 
 <%= paginate @drinks %>
-
-<% @drinks.each do |drink| %>
-  <h3><%= link_to drink.name, drink %> by <%= drink.brand %></h3>
-  <p><%= drink.reviews.count %> Comments</p>
-<% end %>
-
-<%= link_to "Add New ENERGY DRINK", new_drink_path %>
