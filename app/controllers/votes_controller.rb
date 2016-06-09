@@ -8,7 +8,7 @@ class VotesController < ApplicationController
     if @vote.save
       respond_to do |format|
         format.html { redirect_to drink_path(@vote.review.drink) }
-        format.json
+        format.json { render json: @vote.review.score }
       end
     else
       previous_vote = Vote.find_by(user: current_user, review: @review)
@@ -19,7 +19,7 @@ class VotesController < ApplicationController
       end
       respond_to do |format|
         format.html { redirect_to drink_path(@vote.review.drink) }
-        format.json { score }
+        format.json { render json: @vote.review.score }
       end
     end
   end

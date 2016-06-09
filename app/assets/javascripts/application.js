@@ -13,3 +13,36 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+$(document).ready(function() {
+  $(".upvote").on("click", function(event) {
+    event.preventDefault();
+    var reviewID = $(this).attr("id");
+
+    var request = $.ajax({
+      method: "POST",
+      url: "/reviews/" + reviewID + "/votes",
+      data: { upvote: 1 },
+      dataType: "json",
+    });
+
+    request.done(function(data) {
+        $(".score-tracker" + reviewID).text(data);
+    });
+  });
+
+  $(".downvote").on("click", function(event) {
+    event.preventDefault();
+    var reviewID = $(this).attr("id");
+
+    var request = $.ajax({
+      method: "POST",
+      url: "/reviews/" + reviewID + "/votes",
+      data: { upvote: -1 },
+      dataType: "json",
+    });
+
+    request.done(function(data) {
+        $(".score-tracker" + reviewID).text(data);
+    });
+  });
+});
