@@ -46,8 +46,8 @@
         <li><%= review.body %></li>
         <li class="score">Score: <%= review.score %></li>
         <div class="votes">
-          <%= link_to "Upvote", drink_review_votes_path(@drink, review, upvote: 1), method: "create" %>
-          <%= link_to "Downvote", drink_review_votes_path(@drink, review, upvote: -1), method: "create"%>
+          <%= link_to "Upvote", review_votes_path(review, upvote: 1), class: "upvote", id: review.id, method: "post" %>
+          <%= link_to "Downvote", review_votes_path(review, upvote: -1), class: "downvote", id: review.id, method: "post"%>
         </div>
       </ul>
     <% end %>

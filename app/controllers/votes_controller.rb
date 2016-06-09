@@ -2,12 +2,12 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @drink = Drink.find(params[:drink_id])
     @review = Review.find(params[:review_id])
     @vote = Vote.new(upvote:vote_params,review:@review,user:current_user)
+
     if @vote.save
       respond_to do |format|
-        format.html { redirect_to drink_path(@drink) }
+        format.html { redirect_to drink_path(@vote.review.drink) }
         format.json
       end
     else
@@ -18,7 +18,7 @@ class VotesController < ApplicationController
         previous_vote.update(upvote: @vote.upvote)
       end
       respond_to do |format|
-        format.html { redirect_to drink_path(@drink) }
+        format.html { redirect_to drink_path(@vote.review.drink) }
         format.json { score }
       end
     end
