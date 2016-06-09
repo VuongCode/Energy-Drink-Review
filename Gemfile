@@ -13,6 +13,7 @@ gem 'carrierwave'
 gem 'fog'
 gem "mini_magick"
 gem 'kaminari'
+gem 'mailcatcher'
 
 group :development, :test do
   gem 'capybara'

@@ -8,6 +8,7 @@ class ReviewsController < ApplicationController
     @review.drink_id = @drink.id
 
     if @review.save
+      ReviewMailer.new_review(@review).deliver_later
       redirect_to drink_path(@drink)
     else
       @vote = Vote.new
