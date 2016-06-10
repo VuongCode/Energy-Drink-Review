@@ -28,6 +28,8 @@ $(document).ready(function() {
     request.done(function(data) {
         $(".score-tracker" + reviewID).text(data);
     });
+
+    return false;
   });
 
   $(".downvote").on("click", function(event) {
@@ -44,5 +46,7 @@ $(document).ready(function() {
     request.done(function(data) {
         $(".score-tracker" + reviewID).text(data);
     });
+
+    return false;
   });
 });
