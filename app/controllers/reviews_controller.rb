@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
       redirect_to drink_path(@drink)
     else
       @vote = Vote.new
-      render 'new'
+      redirect_to drink_path(@drink)
     end
   end
 

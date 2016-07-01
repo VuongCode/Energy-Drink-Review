@@ -47,7 +47,7 @@
         <li class="score">Score: <span class="score-tracker<%= review.id %>"><%= review.score %></span></li>
         <div class="votes">
           <%= link_to "Upvote", review_votes_path(review, upvote: 1), class: "upvote", id: review.id, :remote => "true", method: "post" %>
-          <%= link_to "Downvote", review_votes_path(review, upvote: -1), class: "downvote", id: review.id, :remote => "true", method: "post"%>
+          <%= link_to "Downvote", review_votes_path(review, upvote: -1), class: "downvote", id: review.id, :remote => "true", method: "post" %>
         </div>
       </ul>
     <% end %>

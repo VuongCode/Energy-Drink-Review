@@ -2,6 +2,13 @@ class Drink < ActiveRecord::Base
   belongs_to :user
   has_many :reviews
 
+  validates :name, presence: true
+  validates :brand, presence: true
+  validates :description, presence: true
+  validates :volume, presence: true
+  validates :caffeine, presence: true
+  validates :calories, presence: true
+
   paginates_per 5
 
   mount_uploader :avatar, AvatarUploader

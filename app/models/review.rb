@@ -3,6 +3,9 @@ class Review < ActiveRecord::Base
   belongs_to :user
   has_many :votes
 
+  validates :body, presence: true
+  validates :rating, presence: true
+
   def score
     score = 0
     self.votes.each do |vote|
